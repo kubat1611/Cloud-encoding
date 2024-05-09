@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from src.backend.controllers import generate_key, encrypt_file, decrypt_file, upload_to_drive, download_from_drive
+from src.backend.controllers import generate_key, encrypt_file, decrypt_file, upload_to_drive, download_from_drive, get_files_info_from_drive
 import os
 
 app = Flask(__name__)
@@ -33,6 +33,11 @@ def download_and_decrypt():
     os.remove(encrypted_file_path)
     return jsonify({'decrypted_file_path': decrypted_file_path})
 
+
+@app.route('/get-all-files', methods=['GET'])
+def get_all_files():
+    files = get_files_info_from_drive()
+    return jsonify({'files': files})
 
 if __name__ == '__main__':
     app.run(debug=True)

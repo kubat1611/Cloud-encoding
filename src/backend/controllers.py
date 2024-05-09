@@ -1,6 +1,8 @@
 import os
+from datetime import datetime
 
 from cryptography.fernet import Fernet
+from flask import jsonify
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
@@ -50,3 +52,38 @@ def decrypt_file(encrypted_file_path, key, decrypted_file_path):
 
     with open(decrypted_file_path, 'wb') as decrypted_file:
         decrypted_file.write(decrypted_data)
+
+
+def get_files_info_from_drive():
+    # Autoryzacja Google Drive
+    gauth = GoogleAuth()
+    gauth.LoadCredentialsFile("credentials.json")
+    if gauth.credentials is None:
+        gauth.LocalWebserverAuth()
+    elif gauth.access_token_expired:
+        gauth.Refresh()
+    else:
+        gauth.Authorize()
+    gauth.SaveCredentialsFile("credentials.json")
+
+    drive = GoogleDrive(gauth)
+
+    file_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()
+    print(file_list)
+    files_info = []
+    for file in file_list:
+        file_size = file.get('fileSize', 'Unknown')
+        file_type = 'file' if file['kind'] == 'drive#file' and file_size != 'Unknown' else 'folder'
+
+        file_info = {
+            'id': file['id'],
+            'name': file['title'],
+            'size': file_size,
+            'type': file_type,
+            'last_used_time': datetime.strptime(file['modifiedDate'],
+                                                "%Y-%m-%dT%H:%M:%S.%fZ") if 'modifiedDate' in file else None
+        }
+        files_info.append(file_info)
+
+    return files_info
+
