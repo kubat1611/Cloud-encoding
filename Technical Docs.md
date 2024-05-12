@@ -41,5 +41,5 @@ Aplikacja umożliwia kopiowanie identyfikatora pliku oraz klucza szyfrowania za 
 - Biblioteki: cryptography, pydrive, os,Tkinter, customtkinter
 
 ### 4.2 Instalacja zależności
-pip install -r requirements.txt
+pip install -r .\requirements
 
