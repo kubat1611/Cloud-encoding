@@ -28,7 +28,7 @@ Aplikacja umożliwia kopiowanie identyfikatora pliku oraz klucza szyfrowania za 
 
 ### 3.2 Wykorzystane biblioteki
 
-- **Tkinter**: Biblioteka do tworzenia interfejsu graficznego.
+- **Tkinter** i **customtkinter**: Biblioteka do tworzenia interfejsu graficznego.
 - **cryptography**: Biblioteka do szyfrowania plików.
 - **pydrive**: Biblioteka do interakcji z Google Drive.
 - **os** Bibliotek do wybierania plików z systemu
@@ -38,8 +38,8 @@ Aplikacja umożliwia kopiowanie identyfikatora pliku oraz klucza szyfrowania za 
 ### 4.1 Wymagania
 
 - Python 3.x
-- Biblioteki: cryptography, pydrive, os,Tkinter
+- Biblioteki: cryptography, pydrive, os,Tkinter, customtkinter
 
 ### 4.2 Instalacja zależności
-pip install cryptography pydrive os Tkinter
+pip install -r requirements.txt
 
