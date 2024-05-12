@@ -1,4 +1,5 @@
 import tkinter as tk
+from customtkinter import *
 from tkinter import filedialog, messagebox, simpledialog, ttk
 from encryption import generate_key, encrypt_file, decrypt_file
 from drive import upload_to_drive, download_from_drive
@@ -8,6 +9,9 @@ import pyperclip
 # Globalne zmienne przechowujące wartości wprowadzone przez użytkownika
 global_file_id = ""
 global_key = ""
+
+
+
 
 def get_encryption_key():
     global global_key
@@ -70,38 +74,95 @@ def select_file():
     return file_path
 
 
-root = tk.Tk()
+root = CTk()
 root.title("File Encryption and Upload to Drive")
-root.geometry("400x300")
-root.configure(bg='#f0f0f0')
+root.geometry("500x400")
 
 style = ttk.Style()
-style.configure('TButton', font=('calibri', 10), padding=5)
-style.configure('TLabel', font=('calibri', 10))
+
+set_appearance_mode("dark")
 
 
-encrypt_button = ttk.Button(root, text="Encrypt and Upload", command=encrypt_and_upload)
+style.configure('TButton', font=('Calibri', 10), padding=5)
+style.configure('TLabel', font=('Calibri', 10))
+
+
+encrypt_button = CTkButton(
+    master=root, 
+    text="Encrypt and Upload", 
+    command=encrypt_and_upload, 
+    corner_radius=30, 
+    hover_color = "#245e9c"
+    )
+
 encrypt_button.pack(pady=10)
 
-decrypt_button = ttk.Button(root, text="Download and Decrypt", command=download_and_decrypt)
+
+decrypt_button = CTkButton(
+    master=root, 
+    text="Download and Decrypt", 
+    command=download_and_decrypt, 
+    corner_radius=30, 
+    hover_color = "#245e9c"
+    )
+
 decrypt_button.pack(pady=10)
 
-file_id_label = ttk.Label(root, text="File ID: ")
-file_id_label.pack()
-file_id_entry = ttk.Entry(root)
-file_id_entry.pack()
+file_id_label = CTkLabel(
+    master=root, 
+    text="File ID: ", 
+    corner_radius=30
+    )
 
-copy_file_id_button = ttk.Button(root, text="Copy File ID", command=copy_file_id)
-copy_file_id_button.pack()
+file_id_label.pack(pady=10)
 
-key_label = ttk.Label(root, text="Encryption Key: ")
-key_label.pack()
-key_entry = ttk.Entry(root)
-key_entry.pack()
+file_id_entry = CTkEntry(
+    master=root, 
+    placeholder_text="Here will be the file ID", 
+    width=300, 
+    corner_radius=30, 
+    text_color = "#FFCC70"
+    )
 
-copy_key_button = ttk.Button(root, text="Copy Encryption Key", command=copy_key)
-copy_key_button.pack()
+file_id_entry.pack(pady=10)
+
+copy_file_id_button = CTkButton(
+    master=root, 
+    text="Copy File ID", 
+    command=copy_file_id, 
+    corner_radius=30, 
+    hover_color = "#245e9c"
+    )
+
+copy_file_id_button.pack(pady=10)
 
 
+key_label = CTkLabel(
+    master=root, 
+    text="Encryption Key: ", 
+    corner_radius=30
+    )
+
+key_label.pack(pady=10)
+
+key_entry = CTkEntry(
+    master=root, 
+    placeholder_text="Here will be the encryption key", 
+    width=300, 
+    corner_radius=30, 
+    text_color = "#FFCC70"
+    )
+
+key_entry.pack(pady=10)
+
+copy_key_button = CTkButton(
+    master=root, 
+    text="Copy Key", 
+    command=copy_key, 
+    corner_radius=30, 
+    hover_color = "#245e9c"
+    )
+
+copy_key_button.pack(pady=10)
 
 root.mainloop()
