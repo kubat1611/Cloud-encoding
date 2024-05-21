@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from customtkinter import *
 from tkinter import filedialog, messagebox, simpledialog, ttk
@@ -26,9 +27,17 @@ def encrypt_and_upload():
     if file_path:
         key = generate_key()
         global_key = key.decode()
+
         encrypted_file_path = f"encrypted_{os.path.basename(file_path)}"
         encrypt_file(file_path, key, encrypted_file_path)
         file_id = upload_to_drive(encrypted_file_path)
+        data = {
+            "file_id": file_id,
+            "global_key": global_key
+        }
+        with open("encrypted_files.json", "a") as f:
+            json.dump(data, f, indent=4)
+            f.close()
         os.remove(encrypted_file_path)
         messagebox.showinfo("Encryption Successful",
                             "File uploaded to Drive.\nRemember to save the encryption key and file ID.")
@@ -38,6 +47,8 @@ def encrypt_and_upload():
         file_id_entry.insert(0, file_id)
         key_entry.delete(0, tk.END)
         key_entry.insert(0, global_key)
+
+
 
 
 def download_and_decrypt():
